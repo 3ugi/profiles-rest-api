@@ -17,3 +17,14 @@ class HelloApiView(APIView):
         ]
 
         return Response({'message': 'Hello', 'an_apiview': an_apiview})
+
+
+class AnotherApiView(APIView):
+
+    def get(self, request, format=None):
+
+        an_apiview = [
+            "Ha Ha Ha"
+        ]
+
+        return Response({'message': 'Another', 'an_apiview': an_apiview})
