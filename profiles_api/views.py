@@ -4,9 +4,14 @@ from rest_framework.response import Response
 from rest_framework import status
 # 39. Create a simple Viewset
 from rest_framework import viewsets
+# 51. Add authentication and permissions to Viewset
+from rest_framework.authentication import TokenAuthentication
 
 from profiles_api import serializers
-
+# 47. Create profiles ViewSet
+from profiles_api import models
+# 51. Add authentication and permissions to Viewset
+from profiles_api import permissions
 
 # 30. Create first APIView
 class HelloApiView(APIView):
@@ -110,4 +115,14 @@ class HelloViewSet(viewsets.ViewSet):
     def destroy(self, request, pk=None):
         """ Handle removing an object. """
         return Response({'http_method': 'DELETE'})
+
+
+# 47. Create profiles ViewSet
+class UserProfileViewSet(viewsets.ModelViewSet):
+    """ Handle creating and updating profiles. """
+    serializer_class = serializers.UserProfileSerializer
+    queryset = models.UserProfile.objects.all()
+    # 51. Add authentication and permissions to Viewset
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.UpdateOwnProfile,)
 
